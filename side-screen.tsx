@@ -573,19 +573,39 @@ export default function SideScreen({
   }
 
   const moveSectionUp = (index: number) => {
-    if (index > 0) {
-      const newOrder = [...sectionOrder]
+    if (index === 0) return
+    setSectionOrder((currentOrder) => {
+      const newOrder = [...currentOrder]
       ;[newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]]
-      setSectionOrder(newOrder)
-    }
+      return newOrder
+    })
   }
 
   const moveSectionDown = (index: number) => {
-    if (index < sectionOrder.length - 1) {
-      const newOrder = [...sectionOrder]
+    setSectionOrder((currentOrder) => {
+      if (index >= currentOrder.length - 1) return currentOrder
+      const newOrder = [...currentOrder]
       ;[newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]]
-      setSectionOrder(newOrder)
-    }
+      return newOrder
+    })
+  }
+
+  const moveExperienceUp = (index: number) => {
+    if (index === 0) return
+    setSections((prev) => {
+      const experience = [...prev.experience]
+      ;[experience[index - 1], experience[index]] = [experience[index], experience[index - 1]]
+      return { ...prev, experience }
+    })
+  }
+
+  const moveExperienceDown = (index: number) => {
+    setSections((prev) => {
+      if (index >= prev.experience.length - 1) return prev
+      const experience = [...prev.experience]
+      ;[experience[index], experience[index + 1]] = [experience[index + 1], experience[index]]
+      return { ...prev, experience }
+    })
   }
 
   const saveCurrentText = () => {
@@ -737,6 +757,7 @@ export default function SideScreen({
                   variant="outline"
                   disabled={index === 0}
                   className={iconActionClass}
+                  aria-label={`Move ${sectionNames[sectionKey as keyof typeof sectionNames]} up`}
                 >
                   <ChevronUp className="h-3 w-3" />
                 </Button>
@@ -746,6 +767,7 @@ export default function SideScreen({
                   variant="outline"
                   disabled={index === sectionOrder.length - 1}
                   className={iconActionClass}
+                  aria-label={`Move ${sectionNames[sectionKey as keyof typeof sectionNames]} down`}
                 >
                   <ChevronDown className="h-3 w-3" />
                 </Button>
@@ -916,6 +938,33 @@ export default function SideScreen({
         </div>
         {sections.experience.map((job, index) => (
           <div key={index} className="mb-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+                Experience {index + 1}
+              </span>
+              <div className="flex gap-1">
+                <Button
+                  onClick={() => moveExperienceUp(index)}
+                  size="sm"
+                  variant="outline"
+                  disabled={index === 0}
+                  className={iconActionClass}
+                  aria-label={`Move experience ${index + 1} up`}
+                >
+                  <ChevronUp className="h-3 w-3" />
+                </Button>
+                <Button
+                  onClick={() => moveExperienceDown(index)}
+                  size="sm"
+                  variant="outline"
+                  disabled={index === sections.experience.length - 1}
+                  className={iconActionClass}
+                  aria-label={`Move experience ${index + 1} down`}
+                >
+                  <ChevronDown className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
             <Input
               value={job.title}
               onChange={(e) => handleExperienceChange(index, "title", e.target.value)}

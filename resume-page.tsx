@@ -11,82 +11,97 @@ export default function ResumePage() {
   const [accentColor, setAccentColor] = useState("#98C1B6")
   const [header, setHeader] = useState({
     name: "Faithe Yates",
-    title: "",
+    title: "Automation & Systems Specialist",
     location: "New York, NY",
-    phone: "631-450-2007", // Updated phone number
-    email: "faitheyates@gmail.com",
-    website: "whyfaithe.com/portfolio",
-    linkedin: "",
+    phone: "(631) 450-2007",
+    email: "tech@whyfaithe.com",
+    website: "",
+    linkedin: "linkedin.com/in/whyfaithe",
     github: "",
   })
-  const [contactOrder, setContactOrder] = useState(["website", "email", "phone", "location"])
+  const [contactOrder, setContactOrder] = useState(["location", "phone", "email", "linkedin"])
   const [sections, setSections] = useState({
     objective:
-      "Systems builder and developer with deep experience in workflow design, automation, and documentation-heavy operations. Skilled in both custom code and no-code platforms. Strong background supporting cross-functional teams, streamlining backend operations, and integrating tools. Proven ability to make complex systems clear, scalable, and usable.",
+      "Automation Specialist with 5+ years of experience building systems for registration, attendance, reporting, payments, and staff operations. Strong experience with Google Apps Script, JavaScript, Airtable, Google Sheets, APIs, webhooks, and forms. Built full registration and attendance systems for education programs, including data tracking, follow-ups, absence reporting, and daily attendance records. Skilled at replacing manual work with simple systems that staff can use.",
     coreCompetencies: [
-      "Automation: Make.com, Zapier, Google Apps Script",
-      "Databases & Forms: Airtable, Notion, Formstack, Fillout",
-      "Web Development: React, Next.js, TypeScript, HTML/CSS",
-      "Backend Foundations: Node.js, Express, SQL (in progress)",
-      "Integrations: REST APIs, Slack APIs, Stripe, Webhooks",
-      "CRMs: HubSpot, Microsoft Dynamics, Monday.com",
-      "Collaboration: Git, Google Workspace, QA Systems",
-      "Documentation: SOPs, training guides, onboarding flows",
+      "Code: JavaScript, Google Apps Script, HTML, CSS, React",
+      "Platforms: Airtable, Google Sheets, Formsite, Google Forms, Jotform, Stripe, Firebase",
+      "Integrations: REST APIs, Webhooks, Make.com",
+      "Automation: Registration, Attendance, Data Syncing, Record Updates, Notifications, Reporting",
+      "Airtable: Bases, Interfaces, Forms, Automations, Scripts, API Connections",
+      "Other: Google Workspace, Excel, Git, Figma, Notion",
     ],
     experience: [
       {
-        title: "Workflow & Systems Developer",
+        title: "Automation & Systems Consultant",
         company: "Freelance",
-        location: "Remote",
-        date: "2020 – Present",
+        location: "",
+        date: "2020–Present",
         bullets: [
-          "Built client-facing intake and backend dashboards in Airtable and Notion",
-          "Used Make.com to automate document handling, scheduling, and status updates",
-          "Integrated Stripe, CRMs, and form tools to centralize operations",
-          "Delivered technical documentation and trained non-technical users",
+          "Build automations with Google Apps Script, JavaScript, Airtable, APIs, webhooks, and Make.com.",
+          "Connect platforms so data moves between systems without repeated manual entry.",
+          "Build systems to collect, organize, track, and update records.",
+          "Use APIs and webhooks to send and update data across different platforms.",
+          "Build rules and checks to improve data accuracy.",
+          "Find and fix problems with APIs, workflow logic, and data.",
+          "Build simple tools that let staff manage more complex systems behind the scenes.",
+          "Write clear instructions so systems can be maintained by others.",
         ],
       },
       {
-        title: "Assistant Director – Program Operations",
+        title: "Web & Workflow Developer",
+        company: "Freelance",
+        location: "",
+        date: "2020–Present",
+        bullets: [
+          "Build web apps and internal tools with JavaScript, React, HTML, CSS, and Firebase.",
+          "Connect websites, forms, databases, and payment systems through APIs.",
+          "Build registration and data collection systems for small programs and organizations.",
+          "Debug code, API connections, and data problems.",
+          "Create workflows that reduce repeated staff work.",
+        ],
+      },
+      {
+        title: "Assistant Director, Business Operations",
         company: "Manhattan Youth",
         location: "New York, NY",
-        date: "2018 – 2020",
+        date: "2018–2024",
         bullets: [
-          "Built digital attendance system with Google Apps Script, replacing paper logs and mail merges",
-          "Maintained enrollment system during peak traffic (350 registrations in under 3 minutes)",
-          "Created workflows ensuring compliance for student data and funding requirements",
-          "Reduced processing time by digitizing student intake and reporting",
-        ],
-      },
-      {
-        title: "Engineering Intern – R&D",
-        company: "Edwards Lifesciences",
-        location: "Irvine, CA",
-        date: "2016",
-        bullets: [
-          "Co-authored lab protocol to prepare pig hearts for valve testing",
-          "Improved clarity and accuracy of simulation setup documentation",
+          "Built and managed registration, attendance, scheduling, and communication systems for youth programs.",
+          "Built a full registration system with Formsite, Google Sheets, and automated follow-ups.",
+          "Created a two-step registration process that handled both DYCD registration and class registration.",
+          "Moved registration from hundreds of paper forms to about five paper forms, mainly for families who needed non-English support.",
+          "Built Google Sheet records that organized student registration information and fed data into attendance sheets.",
+          "Included student allergies and other important information directly in attendance records.",
+          "Built an absence form that let families or staff report absences before the program day.",
+          "Set the attendance system to show only that day's reported absences and send them to the daily attendance sheet.",
+          "Added early dismissal information to the same attendance process so staff could see important daily updates in one place.",
+          "Built sports registration systems in Formsite.",
+          "Used Google Forms for permission slips and other student forms.",
+          "Built a Google Apps Script attendance process that reduced a 1–2 hour task to about 5 minutes.",
+          "Trained staff and created instructions for new systems.",
         ],
       },
     ],
     education: [
       {
-        degree: "MFA – Creative Writing",
-        school: "The New School",
+        degree: "Front-End Development",
+        school: "Scrimba — JavaScript, React, APIs",
         location: "",
       },
       {
-        degree: "BS – Mechanical Engineering",
+        degree: "B.S., Mechanical Engineering",
         school: "University of the Pacific",
         location: "",
       },
     ],
-    certifications: [
-      "Front-End Developer Career Path – Scrimba (2021)",
-      "Advanced Airtable Systems (self-taught, expert use)",
-      "Make.com Automation Design (self-taught, expert use)",
+    certifications: [],
+    technicalStack: [
+      "Airtable + Stripe Management System — Built an Airtable system that connects with Stripe to manage invoices and payments; automated customer lookup, invoice creation, line items, payment tracking, and record updates.",
+      "Education Registration & Attendance System — Built a full Formsite and Google Sheets registration process with absence, early dismissal, allergy, and daily attendance reporting.",
+      "Hockey Camp Registration System — Built a lightweight registration system connected with Stripe for payments, online forms, and waivers.",
+      "High-Volume API Automation — Built an API automation that could process 900+ designs per day, including data preparation, API requests, processing, and record updates.",
     ],
-    technicalStack: [],
   })
   const [printSettings, setPrintSettings] = useState({
     margin: 96,
@@ -107,14 +122,14 @@ export default function ResumePage() {
     experience: true,
     education: true,
     certifications: true,
-    technicalStack: false,
+    technicalStack: true,
   })
   const [sectionOrder, setSectionOrder] = useState([
     "objective",
     "coreCompetencies",
     "experience",
     "education",
-    "certifications",
+    "technicalStack",
   ])
   const [skillsColumns, setSkillsColumns] = useState(1)
 
@@ -235,25 +250,23 @@ export default function ResumePage() {
                     {job.title}
                   </h4>
                   <p className="text-gray-600" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                    <strong>{job.company}</strong> | {job.location} | {job.date}
+                    {[job.company, job.location, job.date].filter(Boolean).join(" | ")}
                   </p>
                 </div>
                 {/* Job descriptions */}
                 {index === 0 && (
                   <p className="text-gray-700 mb-2" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                    Oversaw backend operations, digital tools, and enrollment systems for a large after-school program
-                    serving hundreds of students.
+                    {null}
                   </p>
                 )}
                 {index === 1 && (
                   <p className="text-gray-700 mb-2" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                    Designs and delivers internal tools and websites for artists, educators, and small teams using
-                    modern frontend frameworks and automation platforms.
+                    {null}
                   </p>
                 )}
                 {index === 2 && (
                   <p className="text-gray-700 mb-2" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                    Helped small teams digitize operations using low-code platforms.
+                    {null}
                   </p>
                 )}
                 <div className="space-y-0.5">
@@ -291,7 +304,7 @@ export default function ResumePage() {
                   <strong>{edu.degree}</strong>
                 </p>
                 <p className="text-gray-800" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                  {edu.school} | {edu.location}
+                  {[edu.school, edu.location].filter(Boolean).join(" | ")}
                 </p>
               </div>
             ))}
@@ -328,7 +341,7 @@ export default function ResumePage() {
                 fontSize: `${printSettings.sectionHeadingFontSize}px`,
               }}
             >
-              Technical Stack
+              Selected Automation Projects
             </h3>
             {sections.technicalStack.map((stack, index) => (
               <p key={index} className="text-gray-800 mb-1" style={{ fontSize: `${printSettings.fontSize}px` }}>
@@ -440,7 +453,7 @@ export default function ResumePage() {
               type: "section-header",
               sectionKey: "certifications-header",
               content: null,
-              height: printSettings.sectionHeadingFontSize + printSettings.sectionSpacing,
+              height: 220,
             })
             sections.certifications.forEach((cert, index) => {
               const itemHeight = printSettings.fontSize * printSettings.lineSpacing + 4
@@ -460,10 +473,10 @@ export default function ResumePage() {
               type: "section-header",
               sectionKey: "technicalStack-header",
               content: null,
-              height: printSettings.sectionHeadingFontSize + printSettings.sectionSpacing,
+              height: 400,
             })
             sections.technicalStack.forEach((tech, index) => {
-              const itemHeight = printSettings.fontSize * printSettings.lineSpacing + 4
+              const itemHeight = 400
               contentItems.push({
                 type: "subsection",
                 sectionKey: "technicalStack",
@@ -495,16 +508,19 @@ export default function ResumePage() {
     const page2Items: typeof contentItems = []
 
     let currentPageHeight = 0
+    let page2Started = false
 
     for (let i = 0; i < contentItems.length; i++) {
       const item = contentItems[i]
 
       // Try to fit on current page
-      if (currentPageHeight + item.height <= pageHeight) {
+      if (!page2Started && currentPageHeight + item.height <= pageHeight) {
         page1Items.push(item)
         currentPageHeight += item.height
       } else {
-        // Doesn't fit on page 1, move to page 2
+        // Once content moves to page 2, keep all later content there so
+        // section order cannot visually jump backward onto page 1.
+        page2Started = true
         page2Items.push(item)
       }
     }
@@ -527,6 +543,11 @@ export default function ResumePage() {
               >
                 {header.name}
               </h1>
+              {header.title && (
+                <p className="text-gray-700 mb-2" style={{ fontSize: `${printSettings.fontSize + 1}px` }}>
+                  {header.title}
+                </p>
+              )}
               <div className="flex flex-wrap items-center justify-center gap-2">
                 {contactOrder.map((contactType) => {
                   const contactMap = {
@@ -586,24 +607,22 @@ export default function ResumePage() {
                   {job.title}
                 </h4>
                 <p className="text-gray-600" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                  <strong>{job.company}</strong> | {job.location} | {job.date}
+                  {[job.company, job.location, job.date].filter(Boolean).join(" | ")}
                 </p>
               </div>
               {index === 0 && (
                 <p className="text-gray-700 mb-2" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                  Oversaw backend operations, digital tools, and enrollment systems for a large after-school program
-                  serving hundreds of students.
+                  {null}
                 </p>
               )}
               {index === 1 && (
                 <p className="text-gray-700 mb-2" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                  Designs and delivers internal tools and websites for artists, educators, and small teams using modern
-                  frontend frameworks and automation platforms.
+                  {null}
                 </p>
               )}
               {index === 2 && (
                 <p className="text-gray-700 mb-2" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                  Helped small teams digitize operations using low-code platforms.
+                  {null}
                 </p>
               )}
               <div className="space-y-0.5">
@@ -644,7 +663,7 @@ export default function ResumePage() {
                 <strong>{edu.degree}</strong>
               </p>
               <p className="text-gray-800" style={{ fontSize: `${printSettings.fontSize}px` }}>
-                {edu.school} | {edu.location}
+                {[edu.school, edu.location].filter(Boolean).join(" | ")}
               </p>
             </div>
           )
@@ -687,7 +706,7 @@ export default function ResumePage() {
                 marginBottom: `${printSettings.sectionSpacing / 2}px`,
               }}
             >
-              Technical Stack
+              Selected Automation Projects
             </h3>
           )
 

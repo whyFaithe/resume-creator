@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { FileDown } from "lucide-react"
+import html2canvas from "html2canvas"
+import { jsPDF } from "jspdf"
 
 export default function ResumeDownload() {
   const [isLoading, setIsLoading] = useState(false)
@@ -40,6 +42,19 @@ export default function ResumeDownload() {
         return
       }
 
+      let hasPrinted = false
+      const printFrame = () => {
+        if (hasPrinted) return
+        hasPrinted = true
+        iframe.contentWindow?.focus()
+        iframe.contentWindow?.print()
+        window.setTimeout(() => {
+          if (iframe.parentNode) document.body.removeChild(iframe)
+        }, 1000)
+      }
+
+      iframe.onload = printFrame
+
       iframeDoc.open()
       iframeDoc.write(`
         <!DOCTYPE html>
@@ -55,13 +70,10 @@ export default function ResumeDownload() {
       `)
       iframeDoc.close()
 
-      iframe.onload = () => {
-        iframe.contentWindow?.focus()
-        iframe.contentWindow?.print()
-        window.setTimeout(() => {
-          document.body.removeChild(iframe)
-        }, 1000)
-      }
+      // document.write() does not consistently emit iframe.onload in every browser.
+      // Keep the load handler for browsers that do fire it, with a guarded fallback
+      // so the button still opens the native print dialog reliably.
+      window.setTimeout(printFrame, 100)
     } else {
       console.error("Resume content not found")
     }
@@ -94,11 +106,65 @@ export default function ResumeDownload() {
     }
   }
 
+  const handlePdfDownload = async () => {
+    setIsLoading(true)
+    try {
+      const pages = Array.from(document.querySelectorAll<HTMLElement>(".resume-pages .page-content"))
+      if (!pages.length) {
+        throw new Error("Resume pages not found")
+      }
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "pt",
+        format: "letter",
+        compress: true,
+      })
+
+      for (const [index, page] of pages.entries()) {
+        const previewWrapper = page.closest<HTMLElement>(".resume-wrapper")
+        const previousTransform = previewWrapper?.style.transform ?? ""
+        if (previewWrapper) previewWrapper.style.transform = "none"
+
+        let canvas: HTMLCanvasElement
+        try {
+          canvas = await html2canvas(page, {
+            backgroundColor: "#ffffff",
+            scale: 2,
+            useCORS: true,
+            logging: false,
+          })
+        } finally {
+          if (previewWrapper) previewWrapper.style.transform = previousTransform
+        }
+
+        if (index > 0) pdf.addPage("letter", "portrait")
+        pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 612, 792)
+      }
+
+      pdf.save("faithe-yates-resume.pdf")
+    } catch (error) {
+      console.error("PDF download failed:", error)
+      alert("PDF download failed. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-center justify-center p-4 bg-white rounded-lg shadow-sm">
       <Button onClick={handlePrint} className="w-full sm:w-auto bg-[#98C1B6] hover:bg-[#7AA498] text-white">
         <FileDown className="mr-2 h-4 w-4" />
         Print Resume
+      </Button>
+      <Button
+        onClick={handlePdfDownload}
+        variant="outline"
+        className="w-full sm:w-auto border-[#98C1B6] text-[#98C1B6] hover:bg-[#98C1B6] hover:text-white"
+        disabled={isLoading}
+      >
+        <FileDown className="mr-2 h-4 w-4" />
+        {isLoading ? "Generating PDF..." : "Download PDF"}
       </Button>
       <Button
         onClick={handleTxtDownload}
