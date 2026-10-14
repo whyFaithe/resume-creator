@@ -63,7 +63,7 @@ export default function ResumePage() {
       },
       {
         title: "Assistant Director, Business Operations",
-        company: "Manhattan Youth",
+        company: "NYC Youth AfterSchool Program",
         location: "New York, NY",
         date: "2018–2024",
         bullets: [
