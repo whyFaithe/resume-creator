@@ -248,6 +248,69 @@ export default function SideScreen({
     setSections((prev) => ({ ...prev, availability: e.target.value }))
   }
 
+  const importStructuredResume = () => {
+    if (!resumeText.trim()) {
+      toast({
+        title: "No resume data",
+        description: "Paste structured resume JSON before importing.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    try {
+      const parsed = JSON.parse(resumeText)
+      const data = parsed?.data ?? parsed
+
+      if (!data?.header || !data?.sections) {
+        throw new Error('Expected an object with "header" and "sections".')
+      }
+
+      const importedSections = data.sections
+      if (!Array.isArray(importedSections.experience) || !Array.isArray(importedSections.education)) {
+        throw new Error('The "experience" and "education" sections must be arrays.')
+      }
+
+      setHeader((previous) => ({
+        ...previous,
+        ...Object.fromEntries(
+          Object.entries(data.header).filter(([, value]) => typeof value === "string")
+        ),
+      }))
+      setSections({
+        objective: typeof importedSections.objective === "string" ? importedSections.objective : "",
+        coreCompetencies: Array.isArray(importedSections.coreCompetencies) ? importedSections.coreCompetencies : [],
+        selectedImpact: Array.isArray(importedSections.selectedImpact) ? importedSections.selectedImpact : [],
+        experience: importedSections.experience,
+        projects: Array.isArray(importedSections.projects) ? importedSections.projects : [],
+        education: importedSections.education,
+        certifications: Array.isArray(importedSections.certifications) ? importedSections.certifications : [],
+        technicalStack: Array.isArray(importedSections.technicalStack) ? importedSections.technicalStack : [],
+      })
+      setSectionVisibility((previous) => ({
+        ...previous,
+        objective: Boolean(importedSections.objective),
+        coreCompetencies: importedSections.coreCompetencies?.length > 0,
+        selectedImpact: importedSections.selectedImpact?.length > 0,
+        experience: importedSections.experience.length > 0,
+        education: importedSections.education.length > 0,
+        certifications: importedSections.certifications?.length > 0,
+        technicalStack: importedSections.technicalStack?.length > 0,
+      }))
+      setResumeText("")
+      toast({
+        title: "Resume imported",
+        description: "Structured resume data was applied without AI processing.",
+      })
+    } catch (error) {
+      toast({
+        title: "Import failed",
+        description: error instanceof Error ? error.message : "Please check the resume JSON and try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
   const processResumeWithGemini = async () => {
     if (!resumeText.trim()) {
       toast({
@@ -679,36 +742,29 @@ export default function SideScreen({
 
           <SidebarSection
             className="bg-[linear-gradient(135deg,rgba(239,246,255,0.95)_0%,rgba(245,243,255,0.95)_100%)]"
-            eyebrow="AI Assist"
+            eyebrow="Resume import"
             icon={Sparkles}
-            title="Process with Gemini"
+            title="Import structured resume"
           >
         <Label htmlFor="resume-text" className="text-sm font-medium mb-2 block">
-          Paste resume text
+          Paste resume JSON
         </Label>
         <Textarea
           id="resume-text"
           value={resumeText}
           onChange={(e) => setResumeText(e.target.value)}
-          placeholder="Paste your complete resume text here..."
+          placeholder='Paste {"header": {...}, "sections": {...}} here...'
           className="w-full h-32 mb-3 text-sm"
         />
         <Button
-          onClick={processResumeWithGemini}
-          disabled={isProcessing || !resumeText.trim()}
+          onClick={importStructuredResume}
+          disabled={!resumeText.trim()}
           className="w-full rounded-xl bg-gradient-to-r from-sky-600 via-cyan-600 to-emerald-600 text-white shadow-lg shadow-cyan-200 hover:from-sky-700 hover:via-cyan-700 hover:to-emerald-700"
         >
-          {isProcessing ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Processing with Gemini...
-            </>
-          ) : (
-            <>
-              <Sparkles className="h-4 w-4 mr-2" />
-              Process with Gemini AI
-            </>
-          )}
+          <>
+            <Sparkles className="h-4 w-4 mr-2" />
+            Import without AI
+          </>
         </Button>
           </SidebarSection>
 
